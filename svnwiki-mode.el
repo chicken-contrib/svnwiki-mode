@@ -1,9 +1,9 @@
 ;;; svnwiki-mode.el --- Major mode for editing svnwiki markup
 
-;; Copyright (C) 2016 Vasilij Schneidermann <v.schneidermann@gmail.com>
+;; Copyright (C) 2016 Vasilij Schneidermann <mail@vasilij.de>
 
-;; Author: Vasilij Schneidermann <v.schneidermann@gmail.com>
-;; URL: https://github.com/wasamasa/svnwiki-mode
+;; Author: Vasilij Schneidermann <mail@vasilij.de>
+;; URL: https://depp.brause.cc/svnwiki-mode
 ;; Version: 0.0.1
 ;; Keywords: text
 
@@ -29,8 +29,7 @@
 ;; A major mode for editing svnwiki markup as specified on
 ;; <https://wiki.call-cc.org/edit-help>.
 
-;; See the README for more info:
-;; https://github.com/wasamasa/svnwiki-mode
+;; See the README for more info: https://depp.brause.cc/svnwiki-mode
 
 ;;; Code:
 
