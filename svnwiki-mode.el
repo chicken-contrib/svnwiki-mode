@@ -237,10 +237,97 @@
      (4 'svnwiki-doc-tag))
     ))
 
+(defcustom svnwiki-multiline-fontification nil
+  "Non-nil if multiline constructs should be fontified.
+Note that this is an experimental option and therefore disabled
+by default.  It may introduce font-lock bugs and other errors."
+  :type 'boolean
+  :group 'svnwiki)
+
+(defconst svnwiki-multiline-pairs
+  '(("{{" . "}}")
+    ("\\[\\[" . "]]")
+    ("<nowiki>" . "</nowiki>")
+    ("<table>" . "</table>")
+    ;; NOTE: be lenient here and let font-lock highlight it if correct
+    ("<enscript" . "</enscript>")))
+
+(defconst svnwiki-starter-re
+  (regexp-opt (mapcar 'car svnwiki-multiline-pairs)))
+
+(defconst svnwiki-ender-re
+  (regexp-opt (mapcar 'cdr svnwiki-multiline-pairs)))
+
+(defun svnwiki-expanded-linewise-region (beg end)
+  (let* ((beg (save-excursion
+                (goto-char beg)
+                (line-beginning-position)))
+         (end (save-excursion
+                (goto-char end)
+                (line-end-position))))
+    (cons beg end)))
+
+;; TODO: use configurable logging
+(defun svnwiki-extend-after-change-region (beg end _len)
+  (let ((region (svnwiki-expanded-linewise-region beg end)))
+    (setq beg (car region))
+    (setq end (cdr region))
+    (let ((ender (save-excursion
+                   (goto-char beg)
+                   (when (re-search-forward svnwiki-ender-re end t)
+                     (cons (match-string 0) (match-end 0))))))
+      ;; if an ender was found, try finding a starter and if
+      ;; successful, return a cons of their positions
+      (if ender
+        (let* ((_ (message "Found ender at %s" ender))
+               (ender-re (car ender))
+               (ender-pos (cdr ender))
+               (starter-re (car (rassoc ender-re svnwiki-multiline-pairs)))
+               (_ (message "XXX: %s %s %s" ender-re ender-pos starter-re))
+               (beg (save-excursion
+                      (goto-char ender-pos)
+                      (when (re-search-backward starter-re nil t)
+                        (match-beginning 0)))))
+          (when beg
+            (message "Found %s at %s" starter-re beg)
+            (put-text-property beg end 'font-lock-multiline t)
+            (cons beg end)))
+        ;; otherwise if a starter was found, try finding an ender and
+        ;; if successful, return a cons of their positions
+        (let ((starter (save-excursion
+                         (goto-char end)
+                         (when (re-search-backward svnwiki-starter-re beg t)
+                           (cons (match-string 0) (match-beginning 0))))))
+          (when starter
+            (let* ((_ (message "Found starter at %s" starter))
+                   (starter-re (car starter))
+                   (starter-pos (cdr starter))
+                   (ender-re (cdr (assoc starter-re svnwiki-multiline-pairs)))
+                   (_ (message "YYY: %s %s %s" starter-re starter-pos ender-re))
+                   (end (save-excursion
+                          (goto-char starter-pos)
+                          (when (re-search-forward ender-re nil t)
+                            (match-end 0)))))
+              (when end
+                (message "Found %s at %s" ender-re end)
+                (put-text-property beg end 'font-lock-multiline t)
+                (cons beg end)))))))))
+
+(defun svnwiki-initial-fontification ()
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward svnwiki-starter-re nil t)
+      (svnwiki-extend-after-change-region (point) (point) 0))))
+
 ;;;###autoload
 (define-derived-mode svnwiki-mode text-mode "svnwiki"
   "Major mode for editing svnwiki markup"
-  (setq font-lock-defaults '(svnwiki-font-lock-keywords t)))
+  (setq font-lock-defaults '(svnwiki-font-lock-keywords t))
+  (when svnwiki-multiline-fontification
+    (setq font-lock-extend-after-change-region-function
+          'svnwiki-extend-after-change-region)
+    (setq font-lock-multiline t)
+    (svnwiki-initial-fontification)))
 
 (provide 'svnwiki-mode)
 ;;; svnwiki-mode.el ends here
