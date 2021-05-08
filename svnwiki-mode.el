@@ -1,4 +1,4 @@
-;;; svnwiki-mode.el --- Major mode for editing svnwiki markup
+;;; svnwiki-mode.el --- Major mode for editing svnwiki markup -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Vasilij Schneidermann <mail@vasilij.de>
 
@@ -6,6 +6,7 @@
 ;; URL: https://depp.brause.cc/svnwiki-mode
 ;; Version: 0.0.1
 ;; Keywords: text
+;; Package-Requires: ((emacs "24.1"))
 
 ;; This file is NOT part of GNU Emacs.
 
