@@ -5,8 +5,8 @@
 ;; Author: Vasilij Schneidermann <mail@vasilij.de>
 ;; URL: https://depp.brause.cc/svnwiki-mode
 ;; Version: 0.0.1
-;; Keywords: text
 ;; Package-Requires: ((emacs "24.1"))
+;; Keywords: wp, hypermedia, languages
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -235,8 +235,7 @@
     (,svnwiki-doc-re
      (1 'svnwiki-doc-tag)
      (3 'svnwiki-literal)
-     (4 'svnwiki-doc-tag))
-    ))
+     (4 'svnwiki-doc-tag))))
 
 (defcustom svnwiki-multiline-fontification nil
   "Non-nil if multiline constructs should be fontified.
@@ -331,4 +330,5 @@ by default.  It may introduce font-lock bugs and other errors."
     (svnwiki-initial-fontification)))
 
 (provide 'svnwiki-mode)
+
 ;;; svnwiki-mode.el ends here
