@@ -7,7 +7,7 @@
 ;; URL: https://github.com/chicken-contrib/svnwiki-mode
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "24.1"))
-;; Keywords: wp, hypermedia, languages
+;; Keywords: wp text
 
 ;; This file is NOT part of GNU Emacs.
 
