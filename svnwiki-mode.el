@@ -1,9 +1,10 @@
 ;;; svnwiki-mode.el --- Major mode for editing svnwiki markup -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Vasilij Schneidermann <mail@vasilij.de>
+;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;; Author: Vasilij Schneidermann <mail@vasilij.de>
-;; URL: https://depp.brause.cc/svnwiki-mode
+;; URL: https://github.com/chicken-contrib/svnwiki-mode
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: wp, hypermedia, languages
@@ -30,7 +31,9 @@
 ;; A major mode for editing svnwiki markup as specified on
 ;; <https://wiki.call-cc.org/edit-help>.
 
-;; See the README for more info: https://depp.brause.cc/svnwiki-mode
+;; svnwiki was created for the Subversion-based wiki of Chicken Scheme
+;; but the markup language is not specific to Subversion, Chicken, or
+;; Scheme.  It could be used for any wiki.
 
 ;;; Code:
 
