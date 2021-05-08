@@ -1,11 +1,13 @@
-;;; svnwiki-mode.el --- Major mode for editing svnwiki markup
+;;; svnwiki-mode.el --- Major mode for editing svnwiki markup -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2016 Vasilij Schneidermann <mail@vasilij.de>
+;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;; Author: Vasilij Schneidermann <mail@vasilij.de>
-;; URL: https://depp.brause.cc/svnwiki-mode
+;; URL: https://github.com/chicken-contrib/svnwiki-mode
 ;; Version: 0.0.1
-;; Keywords: text
+;; Package-Requires: ((emacs "24.1"))
+;; Keywords: wp text
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -29,7 +31,9 @@
 ;; A major mode for editing svnwiki markup as specified on
 ;; <https://wiki.call-cc.org/edit-help>.
 
-;; See the README for more info: https://depp.brause.cc/svnwiki-mode
+;; svnwiki was created for the Subversion-based wiki of Chicken Scheme
+;; but the markup language is not specific to Subversion, Chicken, or
+;; Scheme.  It could be used for any wiki.
 
 ;;; Code:
 
@@ -234,8 +238,7 @@
     (,svnwiki-doc-re
      (1 'svnwiki-doc-tag)
      (3 'svnwiki-literal)
-     (4 'svnwiki-doc-tag))
-    ))
+     (4 'svnwiki-doc-tag))))
 
 (defcustom svnwiki-multiline-fontification nil
   "Non-nil if multiline constructs should be fontified.
@@ -330,4 +333,5 @@ by default.  It may introduce font-lock bugs and other errors."
     (svnwiki--initial-fontification)))
 
 (provide 'svnwiki-mode)
+
 ;;; svnwiki-mode.el ends here
