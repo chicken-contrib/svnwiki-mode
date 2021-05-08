@@ -258,7 +258,7 @@ by default.  It may introduce font-lock bugs and other errors."
 (defconst svnwiki-ender-re
   (regexp-opt (mapcar 'cdr svnwiki-multiline-pairs)))
 
-(defun svnwiki-expanded-linewise-region (beg end)
+(defun svnwiki--expanded-linewise-region (beg end)
   (let* ((beg (save-excursion
                 (goto-char beg)
                 (line-beginning-position)))
@@ -268,8 +268,8 @@ by default.  It may introduce font-lock bugs and other errors."
     (cons beg end)))
 
 ;; TODO: use configurable logging
-(defun svnwiki-extend-after-change-region (beg end _len)
-  (let ((region (svnwiki-expanded-linewise-region beg end)))
+(defun svnwiki--extend-after-change-region (beg end _len)
+  (let ((region (svnwiki--expanded-linewise-region beg end)))
     (setq beg (car region))
     (setq end (cdr region))
     (let ((ender (save-excursion
@@ -313,11 +313,11 @@ by default.  It may introduce font-lock bugs and other errors."
                 (put-text-property beg end 'font-lock-multiline t)
                 (cons beg end)))))))))
 
-(defun svnwiki-initial-fontification ()
+(defun svnwiki--initial-fontification ()
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward svnwiki-starter-re nil t)
-      (svnwiki-extend-after-change-region (point) (point) 0))))
+      (svnwiki--extend-after-change-region (point) (point) 0))))
 
 ;;;###autoload
 (define-derived-mode svnwiki-mode text-mode "svnwiki"
@@ -325,9 +325,9 @@ by default.  It may introduce font-lock bugs and other errors."
   (setq font-lock-defaults '(svnwiki-font-lock-keywords t))
   (when svnwiki-multiline-fontification
     (setq font-lock-extend-after-change-region-function
-          'svnwiki-extend-after-change-region)
+          'svnwiki--extend-after-change-region)
     (setq font-lock-multiline t)
-    (svnwiki-initial-fontification)))
+    (svnwiki--initial-fontification)))
 
 (provide 'svnwiki-mode)
 ;;; svnwiki-mode.el ends here
