@@ -31,8 +31,8 @@
 ;; A major mode for editing svnwiki markup as specified on
 ;; <https://wiki.call-cc.org/edit-help>.
 
-;; svnwiki was created for the Subversion-based wiki of Chicken Scheme
-;; but the markup language is not specific to Subversion, Chicken, or
+;; svnwiki was created for the Subversion-based wiki of CHICKEN Scheme
+;; but the markup language is not specific to Subversion, CHICKEN, or
 ;; Scheme.  It could be used for any wiki.
 
 ;;; Code:
