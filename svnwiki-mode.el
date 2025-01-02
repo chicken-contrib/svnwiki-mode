@@ -37,6 +37,8 @@
 
 ;;; Code:
 
+(require 'outline) ; needed for outline faces
+
 (defgroup svnwiki nil
   "svnwiki markup support"
   :group 'text)
